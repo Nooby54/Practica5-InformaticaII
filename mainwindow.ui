@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>641</width>
-    <height>677</height>
+    <height>660</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>8514oem</family>
+    <bold>true</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>PacMan</string>
@@ -43,10 +49,48 @@
      <string>Puntuacion:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="puntuacion">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>160</x>
+      <y>20</y>
+      <width>63</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>8514oem</family>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>20</y>
+      <width>191</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>8514oem</family>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Puntos restantes:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="puntos">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
       <y>20</y>
       <width>63</width>
       <height>20</height>
@@ -63,7 +107,6 @@
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

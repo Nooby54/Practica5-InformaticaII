@@ -21,7 +21,7 @@ Pacman::Pacman(vector<vector<char>> &mapa, vector<pair<QGraphicsEllipseItem *, i
         movimiento(dx, dy);
             configurarSprite(dir);
         } });
-    timerMovimiento->start(30);
+    timerMovimiento->start(35);
 }
 
 void Pacman::keyPressEvent(QKeyEvent *event)
@@ -59,8 +59,8 @@ void Pacman::movimiento(int dx, int dy)
     int nuevoY = y + dy;
 
     const int tamCelda = 24;
-    const int anchoSprite = 13;
-    const int altoSprite = 13;
+    const int anchoSprite = 12;
+    const int altoSprite = 12;
 
     int colInicio = (nuevoX - 2) / tamCelda;
     int colFin = (nuevoX + anchoSprite + 8) / tamCelda;
@@ -87,6 +87,9 @@ void Pacman::movimiento(int dx, int dy)
                         puntuacion += (it->second == 1) ? 10 : 40;
                         emit puntuacionActualizada(puntuacion);
                         vectorPuntos.erase(it);
+
+                        size_t restantes = vectorPuntos.size();
+                        emit puntosRestantes(restantes);
                         mapa[fila][col] = 0;
                         break;
                     }

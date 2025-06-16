@@ -71,13 +71,16 @@ MainWindow::MainWindow(QWidget *parent)
     escena->addItem(pacman);
     pacman->setPos(310, 410);
     pacman->setFocus();
+    ui->puntos->setText(QString::number(vectorPuntos.size()));
 
     connect(pacman, &Pacman::puntuacionActualizada, this, [=](int puntos)
-            { ui->label_2->setText(QString::number(puntos)); });
+            { ui->puntuacion->setText(QString::number(puntos)); });
+
+    connect(pacman, &Pacman::puntosRestantes, this, [=](size_t puntosRestantes)
+            { ui->puntos->setText(QString::number(puntosRestantes)); });
     ui->graphicsView->setFixedSize(674, 746);
+
     this->setFixedSize(700, 820);
-
-
 }
 
 MainWindow::~MainWindow()

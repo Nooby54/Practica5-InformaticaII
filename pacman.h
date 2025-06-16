@@ -25,6 +25,7 @@ private:
 
 signals:
     void puntuacionActualizada(int nuevaPuntuacion);
+    void puntosRestantes(size_t puntos);
 
 public:
     Pacman(vector<vector<char>> &mapa, vector<pair<QGraphicsEllipseItem *, int>> vectorPuntos);
