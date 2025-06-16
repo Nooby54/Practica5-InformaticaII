@@ -14,9 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(escena);
     ui->graphicsView->setFixedSize(600 + (ui->graphicsView->frameWidth() * 2), 600 + (ui->graphicsView->frameWidth() * 2));
 
-    this->adjustSize();
-    this->setFixedSize(this->size());
-
     Pacman *pacman = new Pacman;
     pacman->setOffset(-pacman->pixmap().width()/2, -pacman->pixmap().height()/2);
     escena->addItem(pacman);
