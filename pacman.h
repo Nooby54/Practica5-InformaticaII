@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsView>
+
+using namespace std;
 
 class Pacman: public QObject, public QGraphicsPixmapItem
 {
@@ -14,9 +17,15 @@ private:
     int spriteAncho = 13, spriteAlto = 13;
     QPixmap hojaSprites, spriteActual;
     int contador = 0;
+    int puntuacion = 0;
+    QGraphicsView *vista;
+    vector<vector<char>> mapa;
+
+    vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos;
+
 
 public:
-    Pacman();
+    Pacman(vector<vector<char>>& mapa,QGraphicsView *vista, vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos);
     void keyPressEvent(QKeyEvent *event) override;
     void movimiento(int dx, int dy);
     void configurarSprite(int dir);
