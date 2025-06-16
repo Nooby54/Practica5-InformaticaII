@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/data/icon.ico"));
 
     const int filas = 31;
     const int columnas = 28;
@@ -69,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
     Pacman *pacman = new Pacman(mapa, vectorPuntos);
     escena->addItem(pacman);
     pacman->setPos(310, 410);
+    pacman->setFocus();
 
     connect(pacman, &Pacman::puntuacionActualizada, this, [=](int puntos)
             { ui->label_2->setText(QString::number(puntos)); });
