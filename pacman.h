@@ -18,14 +18,15 @@ private:
     QPixmap hojaSprites, spriteActual;
     int contador = 0;
     int puntuacion = 0;
-    QGraphicsView *vista;
+    QTimer *timerMovimiento;
     vector<vector<char>> mapa;
-
     vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos;
 
+signals:
+    void puntuacionActualizada(int nuevaPuntuacion);
 
 public:
-    Pacman(vector<vector<char>>& mapa,QGraphicsView *vista, vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos);
+    Pacman(vector<vector<char>>& mapa, vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos);
     void keyPressEvent(QKeyEvent *event) override;
     void movimiento(int dx, int dy);
     void configurarSprite(int dir);

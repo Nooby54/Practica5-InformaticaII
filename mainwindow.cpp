@@ -41,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
             mapa[fila][col] = valor;
             int x = col * tamCelda;
             int y = fila * tamCelda;
-
             if (valor == 3) {
                 QGraphicsRectItem *pared = new QGraphicsRectItem(x, y, tamCelda-0.5, tamCelda-0.5);
                 pared->setPen(QPen (Qt::blue,2));
@@ -53,18 +52,22 @@ MainWindow::MainWindow(QWidget *parent)
                 punto->setBrush(Qt::white);
                 vectorPuntos.push_back(make_pair(punto,1));
             } else if (valor == 2) {
-                QGraphicsEllipseItem *especial = new QGraphicsEllipseItem(x + tamCelda/6, y + tamCelda/6, (tamCelda * 2) / 3, (tamCelda * 2) / 3);
-                especial->setBrush(Qt::white);
+                QGraphicsEllipseItem *especial = new QGraphicsEllipseItem(0, 0, (tamCelda * 2) / 3, (tamCelda * 2) / 3);
+                especial->setBrush(Qt::gray);
                 escena->addItem(especial);
-                vectorPuntos.push_back(make_pair(especial,1));
+                especial->setPos(x + tamCelda/6, y + tamCelda/6);
+                vectorPuntos.push_back(make_pair(especial,2));
             }
         }
         fila++;
     }
-
-    Pacman *pacman = new Pacman(mapa,ui->graphicsView,vectorPuntos);
+    Pacman *pacman = new Pacman(mapa,vectorPuntos);
     escena->addItem(pacman);
     pacman->setPos(310, 410);
+
+    connect(pacman, &Pacman::puntuacionActualizada, this, [=](int puntos){
+        ui->label_2->setText(QString::number(puntos));
+    });
 }
 
 MainWindow::~MainWindow()

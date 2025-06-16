@@ -1,8 +1,8 @@
 #include "pacman.h"
 #include <QKeyEvent>
 #include <QDebug>
-Pacman::Pacman(vector<vector<char>>& mapa, QGraphicsView *vista, vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos):
-    mapa(mapa), vista(vista),vectorPuntos(vectorPuntos){
+Pacman::Pacman(vector<vector<char>>& mapa, vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos):
+    mapa(mapa), vectorPuntos(vectorPuntos){
     x = 310;
     y = 410;
 
@@ -57,12 +57,12 @@ void Pacman::movimiento(int dx, int dy) {
                 for (auto it = vectorPuntos.begin(); it != vectorPuntos.end(); ++it) {
                     QGraphicsEllipseItem* punto = it->first;
                     QPointF puntoPos = punto->scenePos();
-
                     if (static_cast<int>(puntoPos.y()) / tamCelda == fila && static_cast<int>(puntoPos.x()) / tamCelda == col) {
                         scene()->removeItem(punto);
                         delete punto;
-                        vectorPuntos.erase(it);
                         puntuacion += (it->second==1) ? 10 : 40;
+                        emit puntuacionActualizada(puntuacion);
+                        vectorPuntos.erase(it);
                         mapa[fila][col] = 0;
                         break;
                     }
@@ -73,7 +73,6 @@ void Pacman::movimiento(int dx, int dy) {
 
     x = nuevoX;
     y = nuevoY;
-    qDebug() << puntuacion;
     if (x > 670) x = 0;
     else if (x < 0) x = 670;
 
