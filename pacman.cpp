@@ -1,8 +1,10 @@
 #include "pacman.h"
 #include <QKeyEvent>
 #include <QDebug>
-Pacman::Pacman(vector<vector<char>>& mapa, vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos):
-    mapa(mapa), vectorPuntos(vectorPuntos){
+#include <QTimer>
+
+Pacman::Pacman(vector<vector<char>> &mapa, vector<pair<QGraphicsEllipseItem *, int>> vectorPuntos) : mapa(mapa), vectorPuntos(vectorPuntos)
+{
     x = 310;
     y = 410;
 
@@ -12,32 +14,47 @@ Pacman::Pacman(vector<vector<char>>& mapa, vector<pair<QGraphicsEllipseItem*,int
     spriteActual = spriteActual.scaled(20, 20, Qt::KeepAspectRatio);
     setPixmap(spriteActual);
 
+    timerMovimiento = new QTimer(this);
+    connect(timerMovimiento, &QTimer::timeout, this, [=]()
+            {
+        if(dy!= 0 || dx != 0){
+        movimiento(dx, dy);
+            configurarSprite(dir);
+        } });
+    timerMovimiento->start(30);
 }
 
-void Pacman::keyPressEvent(QKeyEvent *event) {
-    switch(event->key()){
+void Pacman::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
     case Qt::Key_W:
-        movimiento(0,-2);
-        configurarSprite(3);
+        dx = 0;
+        dy = -2;
+        dir = 3;
         break;
     case Qt::Key_A:
-        movimiento(-2,0);
-        configurarSprite(2);
+        dx = -2;
+        dy = 0;
+        dir = 2;
         break;
     case Qt::Key_S:
-        movimiento(0,2);
-        configurarSprite(1);
+        dx = 0;
+        dy = 2;
+        dir = 1;
         break;
     case Qt::Key_D:
-        movimiento(2,0);
-        configurarSprite(0);
+        dx = 2;
+        dy = 0;
+        dir = 0;
         break;
     default:
         QGraphicsItem::keyPressEvent(event);
     }
 }
 
-void Pacman::movimiento(int dx, int dy) {
+void Pacman::movimiento(int dx, int dy)
+{
     int nuevoX = x + dx;
     int nuevoY = y + dy;
 
@@ -49,18 +66,25 @@ void Pacman::movimiento(int dx, int dy) {
     int colFin = (nuevoX + anchoSprite + 8) / tamCelda;
     int filaInicio = nuevoY / tamCelda;
     int filaFin = (nuevoY + altoSprite + 8) / tamCelda;
-    for (int fila = filaInicio; fila <= filaFin; ++fila) {
-        for (int col = colInicio; col <= colFin; ++col) {
-            if (mapa[fila][col] == 3) {
+    for (int fila = filaInicio; fila <= filaFin; ++fila)
+    {
+        for (int col = colInicio; col <= colFin; ++col)
+        {
+            if (mapa[fila][col] == 3)
+            {
                 return;
-            } else if (mapa[fila][col] == 1 || mapa[fila][col]==2) {
-                for (auto it = vectorPuntos.begin(); it != vectorPuntos.end(); ++it) {
-                    QGraphicsEllipseItem* punto = it->first;
+            }
+            else if (mapa[fila][col] == 1 || mapa[fila][col] == 2)
+            {
+                for (auto it = vectorPuntos.begin(); it != vectorPuntos.end(); ++it)
+                {
+                    QGraphicsEllipseItem *punto = it->first;
                     QPointF puntoPos = punto->scenePos();
-                    if (static_cast<int>(puntoPos.y()) / tamCelda == fila && static_cast<int>(puntoPos.x()) / tamCelda == col) {
+                    if (static_cast<int>(puntoPos.y()) / tamCelda == fila && static_cast<int>(puntoPos.x()) / tamCelda == col)
+                    {
                         scene()->removeItem(punto);
                         delete punto;
-                        puntuacion += (it->second==1) ? 10 : 40;
+                        puntuacion += (it->second == 1) ? 10 : 40;
                         emit puntuacionActualizada(puntuacion);
                         vectorPuntos.erase(it);
                         mapa[fila][col] = 0;
@@ -73,18 +97,22 @@ void Pacman::movimiento(int dx, int dy) {
 
     x = nuevoX;
     y = nuevoY;
-    if (x > 670) x = 0;
-    else if (x < 0) x = 670;
+    if (x > 670)
+        x = 0;
+    else if (x < 0)
+        x = 670;
 
     setPos(x, y);
 }
 
-void Pacman::configurarSprite(int dir){
-    spriteY = dir*spriteAlto;
-    spriteX = spriteAncho*contador;
+void Pacman::configurarSprite(int dir)
+{
+    spriteY = dir * spriteAlto;
+    spriteX = spriteAncho * contador;
     spriteActual = hojaSprites.copy(spriteX, spriteY, spriteAncho, spriteAlto);
     spriteActual = spriteActual.scaled(20, 20, Qt::KeepAspectRatio);
     setPixmap(spriteActual);
     contador++;
-    if(contador==4) contador = 0;
+    if (contador == 4)
+        contador = 0;
 }

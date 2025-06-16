@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Pacman: public QObject, public QGraphicsPixmapItem
+class Pacman : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 
@@ -18,15 +18,16 @@ private:
     QPixmap hojaSprites, spriteActual;
     int contador = 0;
     int puntuacion = 0;
+    int dx = 0, dy = 0, dir = 0;
     QTimer *timerMovimiento;
     vector<vector<char>> mapa;
-    vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos;
+    vector<pair<QGraphicsEllipseItem *, int>> vectorPuntos;
 
 signals:
     void puntuacionActualizada(int nuevaPuntuacion);
 
 public:
-    Pacman(vector<vector<char>>& mapa, vector<pair<QGraphicsEllipseItem*,int>> vectorPuntos);
+    Pacman(vector<vector<char>> &mapa, vector<pair<QGraphicsEllipseItem *, int>> vectorPuntos);
     void keyPressEvent(QKeyEvent *event) override;
     void movimiento(int dx, int dy);
     void configurarSprite(int dir);
