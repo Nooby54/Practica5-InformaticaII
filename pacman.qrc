@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sprites/PacMan (52x52).png</file>
+    </qresource>
+</RCC>
