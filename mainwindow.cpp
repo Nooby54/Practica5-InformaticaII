@@ -7,7 +7,6 @@
 #include <QFile>
 #include <QTextStream>
 #include <vector>
-#include <QDebug>
 
 using namespace std;
 

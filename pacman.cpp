@@ -1,6 +1,5 @@
 #include "pacman.h"
 #include <QKeyEvent>
-#include <QDebug>
 #include <QTimer>
 
 Pacman::Pacman(vector<vector<char>> &mapa, vector<pair<QGraphicsEllipseItem *, int>> vectorPuntos) : mapa(mapa), vectorPuntos(vectorPuntos)
